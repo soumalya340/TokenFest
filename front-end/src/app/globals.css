@@ -9,8 +9,11 @@ body {
   font-family: theme("fontFamily.raleway"), sans-serif !important;
 }
 
-.ant-select-dropdown {
-  font-family: theme("fontFamily.raleway");
+.ant-select-dropdown,
+.ant-input-number-input,
+.ant-picker-panel-container,
+.ant-picker-input {
+  font-family: theme("fontFamily.raleway") !important;
 }
 
 [class^="ant-select-select"] {
@@ -21,4 +24,8 @@ body {
 
 .ant-input {
   font-family: theme("fontFamily.raleway");
+}
+
+.tw-connect-wallet {
+  font-size: 14px !important;
 }
