@@ -21,7 +21,7 @@ const Nav = ({}) => {
         { title: "Ongoing Proposals", path: "/explore/ongoing-proposals" },
         {
           title: "Crowdfunding Events",
-          path: "/home/explore/crowdfunding-events",
+          path: "/explore/crowdfunding-events",
         },
       ],
     },
@@ -30,7 +30,7 @@ const Nav = ({}) => {
       subItems: [
         {
           title: "Crowdfunding Events",
-          path: "/hdashboard/crowdfunding-events",
+          path: "/dashboard/crowdfunding-events",
         },
         { title: "Started Events", path: "/dashboard/started-events" },
       ],

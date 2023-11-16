@@ -11,11 +11,6 @@ import {
 } from "@thirdweb-dev/react";
 import Nav from "@/components/common/Nav";
 
-// export const metadata: Metadata = {
-//   title: "Token Fest",
-//   description: "TokenFest A Dao NFT where people make there dreams real",
-// };
-
 export default function RootLayout({
   children,
 }: {
