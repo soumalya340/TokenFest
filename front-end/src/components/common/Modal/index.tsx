@@ -1,14 +1,6 @@
 import { FC } from "react";
-// import { VscChromeClose } from "react-icons/vsc";
-import { Modal as AntModal, ModalProps } from "antd";
-import { Montserrat } from "next/font/google";
 
-const montserrat = Montserrat({
-  weight: ["200", "400", "600", "700", "900"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
+import { Modal as AntModal, ModalProps } from "antd";
 
 const Modal: FC<ModalProps> = ({
   children,
@@ -17,14 +9,8 @@ const Modal: FC<ModalProps> = ({
   ...rest
 }) => {
   return (
-    <AntModal
-      centered
-      width={width}
-      footer={footer}
-      // closeIcon={<VscChromeClose className="h-6 w-6 text-lg" />}
-      {...rest}
-    >
-      <div className={montserrat.className}>{children}</div>
+    <AntModal centered width={width} footer={footer} {...rest}>
+      <div className="!font-raleway">{children}</div>
     </AntModal>
   );
 };
