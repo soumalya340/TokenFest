@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage, FormikProps } from "formik";
 import Button from "@/components/common/Button";
 import { Select, DatePicker } from "antd";
 import * as Yup from "yup";
+import { useProposal } from "@/ContextProviders/ProposalProvider";
 interface FormMessage {
   title: string;
   description: string;
@@ -14,35 +15,37 @@ interface FormMessage {
 }
 
 const ConvertModal = () => {
-  // const { proposal } = useProposal();
+  const { proposal } = useProposal();
 
-  // const initialValues: FormMessage = proposal ? {
-  //   title: proposal.title,
-  //   description: proposal.description,
-  //   priceperNFT: proposal.priceperNFT,
-  //   funding_goal: proposal.funding_goal,
-  //   stable_coin_option: "",
-  //   starting_date: "",
-  //   ending_date: "",
-  // } : {
-  //   title: "",
+  const initialValues: FormMessage = proposal
+    ? {
+        title: proposal.title,
+        description: proposal.description,
+        priceperNFT: proposal.priceperNFT,
+        funding_goal: proposal.funding_goal,
+        stable_coin_option: "MATIC",
+        starting_date: "",
+        ending_date: "",
+      }
+    : {
+        title: "",
+        description: "",
+        priceperNFT: 0,
+        funding_goal: 0,
+        stable_coin_option: "",
+        starting_date: "",
+        ending_date: "",
+      };
+
+  // const initialValues: FormMessage = {
+  //   title: "Lorem ipsum dolor sit amet",
   //   description: "",
   //   priceperNFT: 0,
   //   funding_goal: 0,
-  //   stable_coin_option: "",
+  //   stable_coin_option: "MATIC",
   //   starting_date: "",
   //   ending_date: "",
   // };
-
-  const initialValues: FormMessage = {
-    title: "Lorem ipsum dolor sit amet",
-    description: "",
-    priceperNFT: 0,
-    funding_goal: 0,
-    stable_coin_option: "MATIC",
-    starting_date: "",
-    ending_date: "",
-  };
   const validationSchema = Yup.object().shape({
     stable_coin_option: Yup.string().required("Required"),
     starting_date: Yup.string().required("Required"),
@@ -72,7 +75,10 @@ const ConvertModal = () => {
                 <div className="text-lg font-medium ">{values.title}</div>
                 <div>{values.description}</div>
                 <div>Price Per NFT: {values.priceperNFT}</div>
-                <div>Funding Goal: {values.funding_goal} USDC</div>
+                <div>
+                  Funding Goal: {values.funding_goal}{" "}
+                  {values.stable_coin_option}
+                </div>
                 <div>
                   <label htmlFor="stable_coin_option" className="block mb-2">
                     StableCoin for the funding :
