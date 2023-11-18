@@ -42,6 +42,7 @@ export const ProposalProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [proposal, setProposal] = useState<ProposalCreationFormMessage | null>(
     null
   );
+  console.log(proposal);
   const [votes, setVotes] = useState<{ likes: number; dislikes: number }>({
     likes: 0,
     dislikes: 0,
