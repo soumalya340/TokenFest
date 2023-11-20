@@ -18,8 +18,8 @@ const Button: FC<IButton> = ({
   ...rest
 }) => {
   const variants: Record<string, unknown> = {
-    primary: "bg-blue-500 hover:bg-blue-400",
-    secondary: "border border-white/70 text-white/70",
+    primary: "bg-blue-500 hover:bg-blue-400 text-white",
+    secondary: "border border-grey-5 text-gray-5",
     tertiary: "",
     destructive: "bg-red-500",
   };
@@ -32,7 +32,7 @@ const Button: FC<IButton> = ({
 
   return (
     <button
-      className={` text-white ${className} ${sizes[size]}  ${variants[variant]}`}
+      className={`  ${className} ${sizes[size]}  ${variants[variant]}`}
       {...rest}
     >
       {_isSubmitting ? <ButtonLoader /> : children}

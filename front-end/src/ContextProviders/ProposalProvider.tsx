@@ -14,7 +14,7 @@ interface ProposalCreationFormMessage {
   priceperNFT: number;
   funding_goal: number;
   proposal_type: string;
-  date: string;
+  date: { $d: { toDateString: () => string } };
 }
 
 interface ProposalContextType {

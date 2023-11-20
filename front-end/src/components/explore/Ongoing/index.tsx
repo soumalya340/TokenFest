@@ -5,12 +5,13 @@ import Lottie from "lottie-react";
 import notFound from "@/components/Empty/notFound.json";
 import Link from "next/link";
 import Button from "@/components/common/Button";
+import { useAddress } from "@thirdweb-dev/react";
 
 const Ongoing = () => {
   const [selectedValue, setSelectedValue] = useState<any>(null);
   const { proposal, votes, setVotes, votesPercentage, setVotesPercentage } =
     useProposal();
-
+  const address = useAddress();
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -45,22 +46,13 @@ const Ongoing = () => {
       <div className="flex justify-center mt-8">
         <div>
           {/* --------------------------------------- proposal card -------------------  */}
-          <div className="w-[500px] text-white/80 text-sm border rounded-sm border-white/20 px-4 py-4 flex flex-col gap-4">
+          <div className="w-[500px text-sm w-[800px] border rounded-sm border-white/20 px-4 py-4 flex flex-col gap-4">
             <div className="">{proposal.title}</div>
             <div>{proposal.description}</div>
-            <div>Price Per NFT: {proposal.priceperNFT} USDC</div>
-            <div>Funding Goal: {proposal.funding_goal} USDC</div>
-            <div>Valid Till: {proposal.date}</div>
-            <div className="italic">
-              Created by{" "}
-              <Link
-                href="https://twitter.com/thatweb3guy1"
-                target="_blank"
-                className="underline text-white/75"
-              >
-                Samuel Afolabi
-              </Link>
-            </div>
+            <div>Price Per NFT: {proposal.priceperNFT} MATIC </div>
+            <div>Funding Goal: {proposal.funding_goal} MATIC</div>
+            <div>Valid Till: {proposal.date.$d.toDateString()}</div>
+            <div className="">Created by: {address}</div>
 
             {/* --------------------------------------  */}
             <form onSubmit={handleSubmit}>

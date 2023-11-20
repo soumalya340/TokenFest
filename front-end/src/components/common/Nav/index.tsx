@@ -6,7 +6,6 @@ import { ConnectWallet, lightTheme } from "@thirdweb-dev/react";
 
 const Nav = ({}) => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-
   const navLinks = [
     {
       title: "Launch",
@@ -74,7 +73,6 @@ const Nav = ({}) => {
             )}
           </div>
         ))}
-
         <ConnectWallet
           theme={lightTheme({
             colors: { primaryButtonBg: "#3B82F6" },
