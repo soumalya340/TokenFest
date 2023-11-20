@@ -25,12 +25,12 @@
   },
   {
     "inputs": [],
-    "name": "DreamStarterCollab_ClaimedNotPossible",
+    "name": "TokenFestCollab_ClaimedNotPossible",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "DreamStarterCollab__ProposalRejected",
+    "name": "TokenFestCollab__ProposalRejected",
     "type": "error"
   },
   {

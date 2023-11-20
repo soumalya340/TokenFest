@@ -8,6 +8,7 @@ import {
   coinbaseWallet,
   walletConnect,
   embeddedWallet,
+
 } from "@thirdweb-dev/react";
 import Nav from "@/components/common/Nav";
 import { ProposalProvider } from "@/ContextProviders/ProposalProvider";

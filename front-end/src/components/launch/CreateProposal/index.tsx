@@ -16,11 +16,12 @@ const CreateProposal = () => {
     priceperNFT: number;
     funding_goal: number;
     proposal_type: string;
-    date: string;
+    date: any;
   }
   const initialValues: FormMessage = {
-    title: "",
-    description: "",
+    title: "Submit Proposal",
+    description:
+      "Submit your project proposals and ideas for community votes and crowdfunding",
     priceperNFT: 1,
     funding_goal: 20,
     proposal_type: "",
@@ -34,12 +35,9 @@ const CreateProposal = () => {
             initialValues={initialValues}
             onSubmit={(values, actions) => {
               setProposal(values);
-              //   console.log(proposal);
-              enqueueSnackbar(`${values.title} proposal has been created`, {
+              enqueueSnackbar(`${values.title} has been created`, {
                 variant: "success",
               });
-              // console.log({ values, actions });
-              alert(JSON.stringify(values, null, 2));
               actions.setSubmitting(false);
             }}
           >
