@@ -4,6 +4,8 @@ import Button from "@/components/common/Button";
 import { Select, DatePicker } from "antd";
 import * as Yup from "yup";
 import { useProposal } from "@/ContextProviders/ProposalProvider";
+import { enqueueSnackbar } from "notistack";
+
 interface FormMessage {
   title: string;
   description: string;
@@ -37,15 +39,6 @@ const ConvertModal = () => {
         ending_date: "",
       };
 
-  // const initialValues: FormMessage = {
-  //   title: "Lorem ipsum dolor sit amet",
-  //   description: "",
-  //   priceperNFT: 0,
-  //   funding_goal: 0,
-  //   stable_coin_option: "MATIC",
-  //   starting_date: "",
-  //   ending_date: "",
-  // };
   const validationSchema = Yup.object().shape({
     stable_coin_option: Yup.string().required("Required"),
     starting_date: Yup.string().required("Required"),
@@ -58,8 +51,9 @@ const ConvertModal = () => {
         validationSchema={validationSchema}
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          console.log({ values, actions });
-          alert(JSON.stringify(values, null, 2));
+          enqueueSnackbar(`Proposal Converted`, {
+            variant: "success",
+          });
           actions.setSubmitting(false);
         }}
       >

@@ -6,6 +6,7 @@ import notFound from "@/components/Empty/notFound.json";
 import Link from "next/link";
 import Button from "@/components/common/Button";
 import { useAddress } from "@thirdweb-dev/react";
+import { enqueueSnackbar } from "notistack";
 
 const Ongoing = () => {
   const [selectedValue, setSelectedValue] = useState<any>(null);
@@ -30,7 +31,9 @@ const Ongoing = () => {
     setVotesPercentage(percentage);
 
     // Display the vote alert
-    alert(`You voted ${selectedValue}`);
+    enqueueSnackbar(`${selectedValue} `, {
+      variant: `${selectedValue == "like" ? "success" : "error"}`,
+    });
   };
 
   if (!proposal)
@@ -43,11 +46,11 @@ const Ongoing = () => {
 
   return (
     <>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-8 ">
         <div>
           {/* --------------------------------------- proposal card -------------------  */}
-          <div className="w-[500px text-sm w-[800px] border rounded-sm border-white/20 px-4 py-4 flex flex-col gap-4">
-            <div className="">{proposal.title}</div>
+          <div className="w-[500px text-sm  border rounded-sm py-8 px-8 max-w-xl flex flex-col gap-4">
+            <div className=" text-2xl mb-1 font-semibold">{proposal.title}</div>
             <div>{proposal.description}</div>
             <div>Price Per NFT: {proposal.priceperNFT} MATIC </div>
             <div>Funding Goal: {proposal.funding_goal} MATIC</div>
@@ -69,7 +72,7 @@ const Ongoing = () => {
                       className="hidden"
                     />
                     <div
-                      className={`w-12 h-12 flex justify-center items-center text-lg hover:text-2xl hover:border-blue-500 py-2 border border-white/10 rounded-sm cursor-pointer ${
+                      className={`w-12 h-12 flex justify-center items-center text-lg hover:text-2xl hover:border-blue-500 py-2 border  rounded-sm cursor-pointer ${
                         selectedValue === "dislike" && "border-blue-500 "
                       }`}
                     >
@@ -89,7 +92,7 @@ const Ongoing = () => {
                       className="hidden"
                     />
                     <div
-                      className={`w-12 h-12 flex  text-lg justify-center items-center hover:text-2xl  hover:border-blue-500 py-2 border border-white/10 rounded-sm cursor-pointer ${
+                      className={`w-12 h-12 flex  text-lg justify-center items-center hover:text-2xl  hover:border-blue-500 py-2 border  rounded-sm cursor-pointer ${
                         selectedValue === "like" && "border-blue-500"
                       }`}
                     >
