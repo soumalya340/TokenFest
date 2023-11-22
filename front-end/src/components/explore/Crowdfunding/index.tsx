@@ -30,30 +30,26 @@ const Crowdfunding = () => {
 
   const { proposal } = useProposal();
 
-  // contractAddress = "0x4CCb3986b89bF1011A41A219024a9CD3E1a9EA7e"
-
   // --------------------------
   useEffect(() => {
-    // erc20ContractAddress = "0x8563F7BD1fa85cB75EFB8e710D3971dC3e3C5C8b";
-    stakingContractAddress = "0x4CCb3986b89bF1011A41A219024a9CD3E1a9EA7e";
+    erc20ContractAddress = "0x8563F7BD1fa85cB75EFB8e710D3971dC3e3C5C8b";
+    stakingContractAddress = "0xA724204002F3C92dD5435fd63345e42F444FDDe8";
 
     if (typeof window !== "undefined" && window.ethereum) {
       provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       console.log("done");
       setIsLoading(false);
-      // const erc20Contract = new ethers.Contract(
-      //   erc20ContractAddress,
-      //   MyTokenABI,
-      //   signer
-      // );
+      erc20Contract = new ethers.Contract(
+        erc20ContractAddress,
+        MyTokenABI,
+        signer
+      );
       stakingContract = new ethers.Contract(
         stakingContractAddress,
         TokenStarterCollab,
         signer
       );
-
-      console.log(stakingContract);
     }
   }, []);
 
@@ -70,35 +66,35 @@ const Crowdfunding = () => {
   }, [provider]);
 
   // ------------
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const price = await stakingContract.salePrice();
-  //       setSalePrice(ethers.utils.formatEther(price));
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const price = await stakingContract.salePrice();
+        setSalePrice(ethers.utils.formatEther(price));
 
-  //       const goal = await stakingContract.crowdFundingGoal();
-  //       setCrowdFundingGoal(ethers.utils.formatEther(goal));
+        const goal = await stakingContract.crowdFundingGoal();
+        setCrowdFundingGoal(ethers.utils.formatEther(goal));
 
-  //       const totalSupply = await stakingContract.totalSupply();
-  //       const nftFunding = totalSupply.mul(price);
+        const totalSupply = await stakingContract.totalSupply();
+        const nftFunding = totalSupply.mul(price);
 
-  //       let total = nftFunding;
+        let total = nftFunding;
 
-  //       if (isCreatorAlreadyStaked) {
-  //         const stakedAmount = goal
-  //           .mul(ethers.BigNumber.from("20"))
-  //           .div(ethers.BigNumber.from("100"));
-  //         total = total.add(stakedAmount);
-  //       }
+        if (isCreatorAlreadyStaked) {
+          const stakedAmount = goal
+            .mul(ethers.BigNumber.from("20"))
+            .div(ethers.BigNumber.from("100"));
+          total = total.add(stakedAmount);
+        }
 
-  //       setTotalFunding(ethers.utils.formatEther(total));
-  //     } catch (error: any) {
-  //       console.error("Error fetching data:", error.message);
-  //     }
-  //     setIsLoading(false);
-  //   }
-  //   fetchData();
-  // }, [stakingContract, isCreatorAlreadyStaked]);
+        setTotalFunding(ethers.utils.formatEther(total));
+      } catch (error: any) {
+        console.error("Error fetching data:", error.message);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, [stakingContract, isCreatorAlreadyStaked]);
 
   // -------------------------
 
@@ -120,8 +116,16 @@ const Crowdfunding = () => {
   // ------------
   async function handleMint() {
     try {
-      // const weiSalePrice = ethers.utils.parseEther(salePrice!);
+      // const weiSalePrice = ethers.utils.formatEther(salePrice!);
+      const weiSalePrice = ethers.utils.parseEther(salePrice!.toString());
 
+      setIsMinting(true);
+      // Approve the staking contract
+      const approveTx = await erc20Contract.approve(
+        stakingContractAddress,
+        weiSalePrice
+      );
+      await approveTx.wait();
       // Mint the token
       const mintTx = await stakingContract.mintTicket();
 
@@ -134,11 +138,10 @@ const Crowdfunding = () => {
       });
     } catch (error: any) {
       console.log(error);
-      //   toast.error(`Error: ${error.message}`, {
-      //     position: toast.POSITION.TOP_RIGHT,
-      //     autoClose: 5000,
-      //   });
-      setMintingDone(true);
+
+      enqueueSnackbar(error, {
+        variant: "error",
+      });
     }
   }
   // ---------
@@ -150,20 +153,22 @@ const Crowdfunding = () => {
   // ---------------------
   if (!proposal)
     return (
-      <div className="flex flex-col gap-4 justify-center items-center mt-20">
+      <div className="flex flex-col gap-4 justify-center  items-center mt-20">
         <Lottie animationData={notFound} loop={true} />
         <div className="text-lg">No Crowdfunding Event</div>
       </div>
     );
   return (
     <>
-      <div className="flex justify-center mt-8">
-        <div className="w-[500px] text-sm border rounded-sm border-white/20 px-4 py-4 flex flex-col gap-4">
+      <div className="flex justify-center mt-8  mb-6 ">
+        <div className=" text-sm border py-8 px-8 max-w-xl  rounded-sm lex flex-col gap-4">
           <div className="text-xl font-bold">{proposal.title}</div>
-          <p>{proposal.description}</p>
+          <div className="text-base mt-4 mb-3">
+            <p>{proposal.description}</p>
+          </div>
 
           {/* -------------------  */}
-          {/* <div>
+          <div>
             {mintingDone ? (
               <div className="flex gap-3">
                 <Button variant="secondary" size="sm">
@@ -179,15 +184,15 @@ const Crowdfunding = () => {
             ) : (
               <div className="mt-4">
                 <Button variant="primary" size="md" onClick={handleMint}>
-                  {isMinting ? "Minting..." : "  Mint NFT"}
+                  {isMinting ? "Minting..." : "Mint NFT"}
                 </Button>
               </div>
             )}
-          </div> */}
+          </div>
           {/* -------------------  */}
-          <Button variant="primary" size="md" onClick={handleMint}>
+          {/* <Button variant="primary" size="md" onClick={handleMint}>
             {isMinting ? "Minting..." : "  Mint NFT"}
-          </Button>
+          </Button> */}
           <div className="mt-4">
             <p>Funding Progress:</p>
             <div className="w-full h-4 bg-gray-300 rounded">

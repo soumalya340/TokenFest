@@ -523,6 +523,18 @@
   },
   {
     "inputs": [
+      { "internalType": "bool", "name": "a", "type": "bool" },
+      { "internalType": "bool", "name": "b", "type": "bool" },
+      { "internalType": "bool", "name": "c", "type": "bool" },
+      { "internalType": "bool", "name": "d", "type": "bool" }
+    ],
+    "name": "setData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       { "internalType": "uint256", "name": "time", "type": "uint256" }
     ],
     "name": "setFundingEndTime",
@@ -534,7 +546,25 @@
     "inputs": [
       { "internalType": "uint256", "name": "time", "type": "uint256" }
     ],
+    "name": "setFundingEndTimeOperator",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "time", "type": "uint256" }
+    ],
     "name": "setFundingStartTime",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "time", "type": "uint256" }
+    ],
+    "name": "setFundingStartTimeOperator",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

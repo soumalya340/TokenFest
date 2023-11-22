@@ -7,8 +7,7 @@ import { useProposal } from "@/ContextProviders/ProposalProvider";
 import { enqueueSnackbar } from "notistack";
 
 const CreateProposal = () => {
-  const { TextArea } = Input;
-  const { setProposal, proposal } = useProposal();
+  const { setProposal } = useProposal();
 
   interface FormMessage {
     description: string;
@@ -19,9 +18,8 @@ const CreateProposal = () => {
     date: any;
   }
   const initialValues: FormMessage = {
-    title: "Submit Proposal",
-    description:
-      "Submit your project proposals and ideas for community votes and crowdfunding",
+    title: "",
+    description: "",
     priceperNFT: 1,
     funding_goal: 20,
     proposal_type: "",
@@ -74,7 +72,7 @@ const CreateProposal = () => {
                       Description
                     </label>
                     <div className=" mt-2">
-                      <Input
+                      <Input.TextArea
                         required
                         value={values.description}
                         onChange={(e: { target: { value: string } }) => {
