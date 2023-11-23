@@ -129,11 +129,11 @@ const CreateProposal = () => {
                   >
                     <Radio value={"collab"} className="!font-raleway">
                       {" "}
-                      DreamStarter Collab
+                      TokenFest Collab
                     </Radio>
                     <Radio value={"holder"} className="!font-raleway">
                       {" "}
-                      DreamStarter Holder
+                      TokenFest Holder
                     </Radio>
                   </Radio.Group>
 
