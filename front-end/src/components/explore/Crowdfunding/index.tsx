@@ -19,7 +19,9 @@ let stakingContract: ethers.Contract;
 const Crowdfunding = () => {
   const [mintingDone, setMintingDone] = useState<boolean>(false);
   const [isMinting, setIsMinting] = useState<boolean>(false);
-
+  const [isStaked, setIsStaked] = useState<boolean>(false);
+  const [isStaking, setIsStaking] = useState<boolean>(false);
+  const [StakingDone, setStakingDone] = useState<boolean>(false);
   // ------------------------
   const [salePrice, setSalePrice] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +35,7 @@ const Crowdfunding = () => {
   // --------------------------
   useEffect(() => {
     erc20ContractAddress = "0x8563F7BD1fa85cB75EFB8e710D3971dC3e3C5C8b";
-    stakingContractAddress = "0xA724204002F3C92dD5435fd63345e42F444FDDe8";
+    stakingContractAddress = "0x2D47f97caE66f5D1582750790F36F57D29A571EA";
 
     if (typeof window !== "undefined" && window.ethereum) {
       provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -114,6 +116,38 @@ const Crowdfunding = () => {
   //   }
   // }, [proposal, stakingContract]);
   // ------------
+  async function handleStake() {
+    try {
+      // // const weiSalePrice = ethers.utils.formatEther(salePrice!);
+      // const weiSalePrice = ethers.utils.parseEther(salePrice!.toString());
+
+      setIsStaking(true);
+      // Approve the staking contract
+      const approveTx = await erc20Contract.approve(
+        stakingContractAddress,
+        "2000000000000000000"
+      );
+      await approveTx.wait();
+      // Mint the token
+      const mintTx = await stakingContract.stake("2000000000000000000");
+
+      await mintTx.wait();
+
+      // display post minting button options
+      setStakingDone(true);
+      setIsStaked(true);
+      enqueueSnackbar(`Stake is successfully!`, {
+        variant: "success",
+      });
+    } catch (error: any) {
+      console.log(error);
+
+      enqueueSnackbar(error, {
+        variant: "error",
+      });
+    }
+  }
+
   async function handleMint() {
     try {
       // const weiSalePrice = ethers.utils.formatEther(salePrice!);
@@ -183,9 +217,16 @@ const Crowdfunding = () => {
               </div>
             ) : (
               <div className="mt-4">
-                <Button variant="primary" size="md" onClick={handleMint}>
-                  {isMinting ? "Minting..." : "Mint NFT"}
-                </Button>
+                {isStaked && (
+                  <Button variant="primary" size="md" onClick={handleMint}>
+                    {isMinting ? "Minting..." : "Mint NFT"}
+                  </Button>
+                )}
+                {!isStaked && (
+                  <Button variant="primary" size="md" onClick={handleStake}>
+                    {isStaking ? "Staking..." : "Stake Token"}
+                  </Button>
+                )}
               </div>
             )}
           </div>
@@ -193,16 +234,18 @@ const Crowdfunding = () => {
           {/* <Button variant="primary" size="md" onClick={handleMint}>
             {isMinting ? "Minting..." : "  Mint NFT"}
           </Button> */}
-          <div className="mt-4">
-            <p>Funding Progress:</p>
-            <div className="w-full h-4 bg-gray-300 rounded">
-              <div
-                style={{ width: `${5}%` }}
-                className="h-full bg-blue-500 rounded"
-              ></div>
+          {isStaked && (
+            <div className="mt-4">
+              <p>Funding Progress:</p>
+              <div className="w-full h-4 bg-gray-300 rounded">
+                <div
+                  style={{ width: `${5}%` }}
+                  className="h-full bg-blue-500 rounded"
+                ></div>
+              </div>
+              <p>{2 / 5} ETH</p>
             </div>
-            <p>{2 / 5} ETH</p>
-          </div>
+          )}
         </div>
       </div>
     </>
