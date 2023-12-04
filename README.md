@@ -56,4 +56,4 @@ Imagine a community-powered event platform where NFT purchases equate to investi
 - **Staking requirements may apply** for event organizers, depending on the event's nature.
 - **Organizers can pitch their ideas** before initiating crowdfunding.
 
-Additionally, DreamStarter will use NFC tags to distribute POAPs for DreamStarter Collab and Holder, ensuring that only POAP users can give reviews and ratings. This setup also provides insights into event income sources, including advertisements. A two-week dispute period is included in the validation process, allowing stakeholders to raise and substantiate discrepancies.
+Additionally, TokenFest will use NFC tags to distribute POAPs for DreamStarter Collab and Holder, ensuring that only POAP users can give reviews and ratings. This setup also provides insights into event income sources, including advertisements. A two-week dispute period is included in the validation process, allowing stakeholders to raise and substantiate discrepancies.
